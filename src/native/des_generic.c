@@ -671,24 +671,24 @@ mc_des_key_size (__unit ()) {
 
 CAMLprim value
 mc_des_des3key (value key, value off, value direction) {
-  mc_des3key (_ba_uint8_off (key, off), Int_val (direction));
+  mc_des3key (_st_uint8_off (key, off), Int_val (direction));
   return Val_unit;
 }
 
 CAMLprim value
 mc_des_cp3key (value dst) {
-  mc_cp3key ((unsigned long *) _ba_uint8 (dst));
+  mc_cp3key ((unsigned long *) _st_uint8 (dst));
   return Val_unit;
 }
 
 CAMLprim value
 mc_des_use3key (value src) {
-  mc_use3key ((unsigned long *) _ba_uint8 (src));
+  mc_use3key ((unsigned long *) _st_uint8 (src));
   return Val_unit;
 }
 
 CAMLprim value
 mc_des_ddes (value src, value off1, value dst, value off2, value blocks) {
-  _mc_ddes (_ba_uint8_off (src, off1), _ba_uint8_off (dst, off2), Int_val (blocks));
+  _mc_ddes (_st_uint8_off (src, off1), _st_uint8_off (dst, off2), Int_val (blocks));
   return Val_unit;
 }

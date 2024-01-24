@@ -43,7 +43,7 @@ CAMLprim value
 mc_xor_into (value b1, value off1, value b2, value off2, value n) {
   _mc_switch_accel(ssse3,
     mc_xor_into_generic(b1, off1, b2, off2, n),
-    xor_into (_ba_uint8_off (b1, off1), _ba_uint8_off (b2, off2), Int_val (n)))
+    xor_into (_st_uint8_off (b1, off1), _st_uint8_off (b2, off2), Int_val (n)))
   return Val_unit;
 }
 
@@ -52,7 +52,7 @@ mc_xor_into (value b1, value off1, value b2, value off2, value n) {
     _mc_switch_accel(ssse3,                                     \
       name##_generic (ctr, dst, off, blocks),                            \
       f ( (uint64_t*) Bp_val (ctr),                                      \
-          (uint64_t*) _ba_uint8_off (dst, off), Long_val (blocks) ))     \
+          (uint64_t*) _st_uint8_off (dst, off), Long_val (blocks) ))     \
     return Val_unit;                                                     \
   }
 

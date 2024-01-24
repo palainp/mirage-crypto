@@ -55,14 +55,14 @@ static inline void _mc_count_16_be_4 (uint64_t *init, uint64_t *dst, size_t bloc
 
 CAMLprim value
 mc_xor_into_generic (value b1, value off1, value b2, value off2, value n) {
-  xor_into (_ba_uint8_off (b1, off1), _ba_uint8_off (b2, off2), Int_val (n));
+  xor_into (_st_uint8_off (b1, off1), _st_uint8_off (b2, off2), Int_val (n));
   return Val_unit;
 }
 
 #define __export_counter(name, f)                                        \
   CAMLprim value name (value ctr, value dst, value off, value blocks) {  \
     f ( (uint64_t*) Bp_val (ctr),                                        \
-        (uint64_t*) _ba_uint8_off (dst, off), Long_val (blocks) );       \
+        (uint64_t*) _st_uint8_off (dst, off), Long_val (blocks) );       \
     return Val_unit;                                                     \
   }
 

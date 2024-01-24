@@ -54,8 +54,8 @@ CAMLprim value
 mc_chacha_round(value count, value src, value off1, value dst, value off2)
 {
   _mc_switch_accel(ssse3,
-    mc_chacha_core_generic(Int_val(count), _ba_uint8_off(src, off1), _ba_uint8_off(dst, off2)),
-    mc_chacha_core(Int_val(count), _ba_uint8_off(src, off1), _ba_uint8_off(dst, off2)));
+    mc_chacha_core_generic(Int_val(count), _st_uint8_off(src, off1), _st_uint8_off(dst, off2)),
+    mc_chacha_core(Int_val(count), _st_uint8_off(src, off1), _st_uint8_off(dst, off2)));
   return Val_unit;
 }
 
@@ -64,7 +64,7 @@ mc_chacha_round(value count, value src, value off1, value dst, value off2)
 CAMLprim value
 mc_chacha_round(value count, value src, value off1, value dst, value off2)
 {
-  mc_chacha_core_generic(Int_val(count), _ba_uint8_off(src, off1), _ba_uint8_off(dst, off2));
+  mc_chacha_core_generic(Int_val(count), _st_uint8_off(src, off1), _st_uint8_off(dst, off2));
   return Val_unit;
 }
 

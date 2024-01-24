@@ -52,17 +52,17 @@ poly1305_update(poly1305_context *ctx, const unsigned char *m, size_t bytes) {
 
 //stubs for OCaml
 CAMLprim value mc_poly1305_init (value ctx, value key, value off) {
-  poly1305_init ((poly1305_context *) Bytes_val(ctx), _ba_uint8_off(key, off));
+  poly1305_init ((poly1305_context *) Bytes_val(ctx), _st_uint8_off(key, off));
   return Val_unit;
 }
 
 CAMLprim value mc_poly1305_update (value ctx, value buf, value off, value len) {
-  poly1305_update ((poly1305_context *) Bytes_val(ctx), _ba_uint8_off(buf, off), Int_val(len));
+  poly1305_update ((poly1305_context *) Bytes_val(ctx), _st_uint8_off(buf, off), Int_val(len));
   return Val_unit;
 }
 
 CAMLprim value mc_poly1305_finalize (value ctx, value mac, value off) {
-  poly1305_finish ((poly1305_context *) Bytes_val(ctx), _ba_uint8_off(mac, off));
+  poly1305_finish ((poly1305_context *) Bytes_val(ctx), _st_uint8_off(mac, off));
   return Val_unit;
 }
 

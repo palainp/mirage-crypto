@@ -3,8 +3,7 @@ open Mirage_crypto_rng
 let src = Logs.Src.create "mirage-crypto-rng.unix" ~doc:"Mirage crypto RNG Unix"
 module Log = (val Logs.src_log src : Logs.LOG)
 
-open Stdlib.Bigarray
-type buffer = (char, int8_unsigned_elt, c_layout) Array1.t
+type buffer = bytes
 external getrandom_buf : buffer -> int -> unit = "mc_getrandom"
 
 let getrandom size =
