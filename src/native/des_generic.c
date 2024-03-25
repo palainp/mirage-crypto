@@ -19,22 +19,22 @@
 #include "des_generic.h"
 
 static void scrunch(const unsigned char *, unsigned long *);
-static void unscrun(unsigned long *, unsigned char *);
-static void desfunc(unsigned long *, unsigned long *);
-static void cookey(unsigned long *);
+static void unscrun(const unsigned long *, unsigned char *);
+static void desfunc(unsigned long *, const unsigned long *);
+static void cookey(const unsigned long *);
 
 static unsigned long KnL[32] = { 0L };
 static unsigned long KnR[32] = { 0L };
 static unsigned long Kn3[32] = { 0L };
-static unsigned char Df_Key[24] = {
+static const unsigned char Df_Key[24] = {
 	0x01,0x23,0x45,0x67,0x89,0xab,0xcd,0xef,
 	0xfe,0xdc,0xba,0x98,0x76,0x54,0x32,0x10,
 	0x89,0xab,0xcd,0xef,0x01,0x23,0x45,0x67 };
 
-static unsigned short bytebit[8]	= {
+static const unsigned short bytebit[8]	= {
 	0200, 0100, 040, 020, 010, 04, 02, 01 };
 
-static unsigned long bigbyte[24] = {
+static const unsigned long bigbyte[24] = {
 	0x800000L,	0x400000L,	0x200000L, 	0x100000L,
 	0x80000L,	0x40000L,	0x20000L,	0x10000L,
 	0x8000L,	0x4000L,	0x2000L,	0x1000L,
@@ -44,22 +44,22 @@ static unsigned long bigbyte[24] = {
 
 /* Use the key schedule specified in the Standard (ANSI X3.92-1981). */
 
-static unsigned char pc1[56] = {
+static const unsigned char pc1[56] = {
 	56, 48, 40, 32, 24, 16,  8,	 0, 57, 49, 41, 33, 25, 17,
 	 9,  1, 58, 50, 42, 34, 26,	18, 10,  2, 59, 51, 43, 35,
 	62, 54, 46, 38, 30, 22, 14,	 6, 61, 53, 45, 37, 29, 21,
 	13,  5, 60, 52, 44, 36, 28,	20, 12,  4, 27, 19, 11,  3 };
 
-static unsigned char totrot[16] = {
+static const unsigned char totrot[16] = {
 	1,2,4,6,8,10,12,14,15,17,19,21,23,25,27,28 };
 
-static unsigned char pc2[48] = {
+static const unsigned char pc2[48] = {
 	13, 16, 10, 23,  0,  4,	 2, 27, 14,  5, 20,  9,
 	22, 18, 11,  3, 25,  7,	15,  6, 26, 19, 12,  1,
 	40, 51, 30, 36, 46, 54,	29, 39, 50, 44, 32, 47,
 	43, 48, 38, 55, 33, 52,	45, 41, 49, 35, 28, 31 };
 
-void mc_deskey(unsigned char key[8], short edf) /* Thanks to James Gillogly & Phil Karn! */
+void mc_deskey(const unsigned char key[8], short edf) /* Thanks to James Gillogly & Phil Karn! */
 {
 	int i, j, l, m, n;
 	unsigned char pc1m[56], pcr[56];
@@ -94,9 +94,10 @@ void mc_deskey(unsigned char key[8], short edf) /* Thanks to James Gillogly & Ph
 	return;
 	}
 
-static void cookey(unsigned long *raw1)
+static void cookey(const unsigned long *raw1)
 {
-	unsigned long *cook, *raw0;
+	unsigned long *cook;
+	const unsigned long *raw0;
 	unsigned long dough[32];
 	int i;
 
@@ -125,7 +126,7 @@ void mc_cpkey(unsigned long into[32])
 	return;
 	}
 
-void mc_usekey(unsigned long from[32])
+void mc_usekey(const unsigned long from[32])
 {
 	unsigned long *to, *endp;
 
@@ -134,7 +135,7 @@ void mc_usekey(unsigned long from[32])
 	return;
 	}
 
-void mc_des(unsigned char inblock[8], unsigned char outblock[8])
+void mc_des(const unsigned char inblock[8], unsigned char outblock[8])
 {
 	unsigned long work[2];
 
@@ -159,7 +160,7 @@ static void scrunch(const unsigned char *outof, unsigned long *into)
 	}
 
 
-static void unscrun(unsigned long *outof, unsigned char *into)
+static void unscrun(const unsigned long *outof, unsigned char *into)
 {
 	*into++ = (*outof >> 24) & 0xffL;
 	*into++ = (*outof >> 16) & 0xffL;
@@ -316,7 +317,7 @@ static unsigned long SP8[64] = {
 	0x10041040L, 0x00041000L, 0x00041000L, 0x00001040L,
 	0x00001040L, 0x00040040L, 0x10000000L, 0x10041000L };
 
-static void desfunc(unsigned long *block, unsigned long *keys)
+static void desfunc(unsigned long *block, const unsigned long *keys)
 {
 	unsigned long fval, work, right, leftt;
 	int round;
@@ -392,7 +393,7 @@ static void desfunc(unsigned long *block, unsigned long *keys)
 
 #ifdef D2_DES
 
-void mc_des2key(unsigned char hexkey[16], short mode) /* stomps on Kn3 too */
+void mc_des2key(const unsigned char hexkey[16], short mode) /* stomps on Kn3 too */
 {
 	short revmod;
 
@@ -416,7 +417,7 @@ void mc_Ddes(const unsigned char from[8], unsigned char into[8])
 	return;
 	}
 
-void mc_D2des(unsigned char from[16], unsigned char into[16])
+void mc_D2des(const unsigned char from[16], unsigned char into[16])
 {
 	unsigned long *right, *l1, swap;
 	unsigned long leftt[2], bufR[2];
@@ -501,7 +502,7 @@ void mc_cp2key(unsigned long into[64])
 	return;
 	}
 
-void mc_use2key(unsigned long from[64])	/* stomps on Kn3 too */
+void mc_use2key(const unsigned long from[64])	/* stomps on Kn3 too */
 {
 	unsigned long *to, *endp;
 
@@ -515,9 +516,9 @@ void mc_use2key(unsigned long from[64])	/* stomps on Kn3 too */
 
 #else	/* D3_DES too */
 
-void mc_des3key(unsigned char hexkey[24], short mode)
+void mc_des3key(const unsigned char hexkey[24], short mode)
 {
-	unsigned char *first, *third;
+	const unsigned char *first, *third;
 	short revmod;
 
 	if( mode == EN0 ) {
@@ -551,7 +552,7 @@ void mc_cp3key(unsigned long into[96])
 	return;
 	}
 
-void mc_use3key(unsigned long from[96])
+void mc_use3key(const unsigned long from[96])
 {
 	unsigned long *to, *endp;
 
@@ -564,7 +565,7 @@ void mc_use3key(unsigned long from[96])
 	return;
 	}
 
-static void D3des(unsigned char from[24], unsigned char into[24])	/* amateur theatrics */
+static void D3des(const unsigned char from[24], unsigned char into[24])	/* amateur theatrics */
 {
 	unsigned long swap, leftt[2], middl[2], right[2];
 

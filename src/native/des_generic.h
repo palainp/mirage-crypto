@@ -36,14 +36,14 @@ typedef union {
 	unsigned char dbyte[16];
 	} M68K2;
 
-extern void mc_deskey(unsigned char [8], short);
+extern void mc_deskey(const unsigned char [8], short);
 /*		      hexkey[8]     MODE
  * Sets the internal key register according to the hexadecimal
  * key contained in the 8 bytes of hexkey, according to the DES,
  * for encryption or decryption according to MODE.
  */
 
-extern void mc_usekey(unsigned long [32]);
+extern void mc_usekey(const unsigned long [32]);
 /*		    cookedkey[32]
  * Loads the internal key register with the data in cookedkey.
  */
@@ -54,7 +54,7 @@ extern void mc_cpkey(unsigned long [32]);
  * located at &cookedkey[0].
  */
 
-extern void mc_des(unsigned char [8], unsigned char [8]);
+extern void mc_des(const unsigned char [8], unsigned char [8]);
 /*		    from[8]	      to[8]
  * Encrypts/Decrypts (according to the key currently loaded in the
  * internal key register) one block of eight bytes at address 'from'
@@ -64,7 +64,7 @@ extern void mc_des(unsigned char [8], unsigned char [8]);
 #ifdef D2_DES
 
 #define desDkey(a,b)	mc_des2key((a),(b))
-extern void mc_des2key(unsigned char [16], short);
+extern void mc_des2key(const unsigned char [16], short);
 /*		      hexkey[16]     MODE
  * Sets the internal key registerS according to the hexadecimal
  * keyS contained in the 16 bytes of hexkey, according to the DES,
@@ -79,7 +79,7 @@ extern void mc_Ddes(const unsigned char [8], unsigned char [8]);
  * into the block at address 'to'.  They can be the same.
  */
 
-extern void mc_D2des(unsigned char [16], unsigned char [16]);
+extern void mc_D2des(const unsigned char [16], unsigned char [16]);
 /*		    from[16]	      to[16]
  * Encrypts/Decrypts (according to the keyS currently loaded in the
  * internal key registerS) one block of SIXTEEN bytes at address 'from'
@@ -106,7 +106,7 @@ extern void mc_make2key(char *, unsigned char [16]);
 #define useDkey(a)	mc_use2key((a))
 #define cpDkey(a)	mc_cp2key((a))
 
-extern void mc_use2key(unsigned long [64]);
+extern void mc_use2key(const unsigned long [64]);
 /*		    cookedkey[64]
  * Loads the internal key registerS with the data in cookedkey.
  * NOTE: this clobbers all three key registers!
@@ -123,14 +123,14 @@ extern void mc_cp2key(unsigned long [64]);
 #define useDkey(a)	mc_use3key((a))
 #define cpDkey(a)	mc_cp3key((a))
 
-extern void mc_des3key(unsigned char [24], short);
+extern void mc_des3key(const unsigned char [24], short);
 /*		      hexkey[24]     MODE
  * Sets the internal key registerS according to the hexadecimal
  * keyS contained in the 24 bytes of hexkey, according to the DES,
  * for DOUBLE encryption or decryption according to MODE.
  */
 
-extern void mc_use3key(unsigned long [96]);
+extern void mc_use3key(const unsigned long [96]);
 /*		    cookedkey[96]
  * Loads the 3 internal key registerS with the data in cookedkey.
  */
