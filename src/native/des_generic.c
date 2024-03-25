@@ -23,9 +23,9 @@ static void unscrun(const unsigned long *, unsigned char *);
 static void desfunc(unsigned long *, const unsigned long *);
 static void cookey(const unsigned long *);
 
-static unsigned long KnL[32] = { 0L };
-static unsigned long KnR[32] = { 0L };
-static unsigned long Kn3[32] = { 0L };
+static __thread unsigned long KnL[32] = { 0L };
+static __thread unsigned long KnR[32] = { 0L };
+static __thread unsigned long Kn3[32] = { 0L };
 static const unsigned char Df_Key[24] = {
 	0x01,0x23,0x45,0x67,0x89,0xab,0xcd,0xef,
 	0xfe,0xdc,0xba,0x98,0x76,0x54,0x32,0x10,
